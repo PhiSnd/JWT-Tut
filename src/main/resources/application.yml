@@ -1,0 +1,25 @@
+# before : .properties - file
+jwt:
+  secret: '[a-zA-Z0-9._]^+$Guidelines89797987forAlphabeticalArraNumeralsandOtherSymbo$'
+
+
+
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/supportportal
+    data-password: Flackz
+    data-username: root
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  #mvc:
+   # throw-exception-if-no-handler-found: true
+  #resources:
+   # add-mappings: false
