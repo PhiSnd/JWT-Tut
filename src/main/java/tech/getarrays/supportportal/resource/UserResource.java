@@ -9,7 +9,7 @@ import tech.getarrays.supportportal.exception.ExceptionHandling;
 //Handles all the requests!
 
 @RestController
-@RequestMapping(path ="/user")
+@RequestMapping(path ={"/", "/user"})
 public class UserResource extends ExceptionHandling {
 
     @GetMapping("/home")

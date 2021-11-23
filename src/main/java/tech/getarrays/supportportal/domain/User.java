@@ -20,14 +20,14 @@ public class User implements Serializable {  // This class is gonna be going fro
     private Date lastLoginDate;
     private Date LastLoginDateDisplay;
     private Date joinDate;
-    private String[] roles; // ROLE_USER, ROLE_ADMIN
+    private String role; // ROLE_USER, ROLE_ADMIN
     private String[] authorities;
     private boolean isActive;
     private boolean isNotLocked; // account is locked or not
 
     public User(){ } //default constructor
 
-    public User(Long id, String userId, String firstName, String lastName, String username, String password, String email, String profileImageUrl, Date lastLoginDate, Date lastLoginDateDisplay, Date joinDate, String[] roles, String[] authorities, boolean isActive, boolean isNotLocked) {
+    public User(Long id, String userId, String firstName, String lastName, String username, String password, String email, String profileImageUrl, Date lastLoginDate, Date lastLoginDateDisplay, Date joinDate, String role, String[] authorities, boolean isActive, boolean isNotLocked) {
         this.id = id;
         this.userId = userId;
         this.firstName = firstName;
@@ -39,7 +39,7 @@ public class User implements Serializable {  // This class is gonna be going fro
         this.lastLoginDate = lastLoginDate;
         this.LastLoginDateDisplay = lastLoginDateDisplay;
         this.joinDate = joinDate;
-        this.roles = roles;
+        this.role = role;
         this.authorities = authorities;
         this.isActive = isActive;
         this.isNotLocked = isNotLocked;
@@ -134,12 +134,12 @@ public class User implements Serializable {  // This class is gonna be going fro
         this.joinDate = joinDate;
     }
 
-    public String[] getRoles() {
-        return roles;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoles(String[] roles) {
-        this.roles = roles;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String[] getAuthorities() {
