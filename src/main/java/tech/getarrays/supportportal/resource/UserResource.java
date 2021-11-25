@@ -12,7 +12,7 @@ import tech.getarrays.supportportal.exception.domain.UserNotFoundException;
 import tech.getarrays.supportportal.exception.domain.UsernameExistException;
 import tech.getarrays.supportportal.service.UserService;
 
-//Handles all the requests!
+//Handles all the requests
 
 @RestController
 @RequestMapping(path = {"/", "/user"})
