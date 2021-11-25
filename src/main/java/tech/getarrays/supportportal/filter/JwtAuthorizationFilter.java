@@ -23,10 +23,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter { //whatever ha
 
     private JWTTokenProvider jwtTokenProvider;
 
-    public JwtAuthorizationFilter(JWTTokenProvider jwtTokenProvider) {
-
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
+    public JwtAuthorizationFilter(JWTTokenProvider jwtTokenProvider) { this.jwtTokenProvider = jwtTokenProvider; }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
