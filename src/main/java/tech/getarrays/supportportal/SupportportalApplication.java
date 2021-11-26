@@ -16,7 +16,6 @@ public class SupportportalApplication {
 
 
 	}
-
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder(){
 		return new BCryptPasswordEncoder();

@@ -45,7 +45,7 @@
 			<version>3.18.2</version>
 		</dependency>
 		<dependency>
-			<groupId>com.google.guava</groupId>    <!-- -->
+			<groupId>com.google.guava</groupId>    <!--for creating a cache -->
 			<artifactId>guava</artifactId>
 			<version>28.1-jre</version>
 		</dependency>
@@ -81,6 +81,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>    <!-- -->
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>2.5.6</version>
 			</plugin>
 		</plugins>
 	</build>
