@@ -19,10 +19,14 @@ import tech.getarrays.supportportal.enumeration.Role;
 import tech.getarrays.supportportal.exception.domain.EmailExistException;
 import tech.getarrays.supportportal.exception.domain.UsernameExistException;
 import tech.getarrays.supportportal.repository.UserRepository;
+import tech.getarrays.supportportal.service.EmailService;
+import tech.getarrays.supportportal.service.LoginAttemptService;
 import tech.getarrays.supportportal.service.UserService;
 
+import javax.mail.MessagingException;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @Transactional
@@ -31,14 +35,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public static final String DEFAULT_USER_IMAGE_PATH = "/user/image/profile/temp";
     private Logger LOGGER = LoggerFactory.getLogger(getClass());
     private UserRepository userRepository;
+    private LoginAttemptService loginAttemptService;
     private BCryptPasswordEncoder passwordEncoder;
+    private EmailService emailService;
 
 
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository,BCryptPasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository,BCryptPasswordEncoder passwordEncoder, LoginAttemptService loginAttemptService,EmailService emailService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.loginAttemptService = loginAttemptService;
+        this.emailService = emailService;
     }
 
     public UserServiceImpl() {
@@ -53,6 +61,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             LOGGER.error("User not found by username" + username);
             throw new UsernameNotFoundException("User not found by username" + username);
         }else {
+            validateLoginAttempt(user);
             user.setLastLoginDateDisplay(user.getLastLoginDate());
             user.setLastLoginDate(new Date());
             userRepository.save(user); //save-method implemented by jpa-repository
@@ -63,8 +72,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     }
 
+    private void validateLoginAttempt(User user){
+        if(user.isNotLocked()){
+            if(loginAttemptService.hasExceededMaxAttempts(user.getUsername())){
+                user.setNotLocked(false);
+            }else{
+                user.setNotLocked(true);
+            }
+        }else {
+            loginAttemptService.evictUserFromLoginAttemptCache(user.getUsername());
+        }
+    }
+
     @Override
-    public User register(String firstName, String lastName, String username, String email) throws EmailExistException, UsernameExistException {
+    public User register(String firstName, String lastName, String username, String email) throws EmailExistException, UsernameExistException, MessagingException {
         validateNewUsernameAndEmail(StringUtils.EMPTY, username, email); //Checks if Username or Email is already taken
         User user = new User();
         user.setUserId(generateUserId());
@@ -82,7 +103,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setAuthorities(Role.ROLE_USER.getAuthorities());
         user.setProfileImageUrl(getTemporaryProfileImageUrl());
         userRepository.save(user);
-        LOGGER.info("new user password:" + password);
+        //LOGGER.info("new user password:" + password);
+        emailService.sendNewPasswordEmail(firstName,password,email);
         return null;
     }
 

@@ -22,7 +22,7 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.sun.mail</groupId>  <!-- -->
+			<groupId>com.sun.mail</groupId>  <!-- for email-->
 			<artifactId>javax.mail</artifactId>
 			<version>1.6.2</version>
 		</dependency>
