@@ -14,16 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 //Triggers when user tries to access an resource and user has no permission to access it
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @Component
 public class JwtAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException exception) throws IOException, ServletException {
-
-
         //same as in JwtAuthenticationEntryPoint
         HttpResponse httpResponse = new HttpResponse(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED, HttpStatus.UNAUTHORIZED.getReasonPhrase().toUpperCase(), SecurityConstant.ACCESS_DENIED_MESSAGE);
         response.setContentType(APPLICATION_JSON_VALUE);
