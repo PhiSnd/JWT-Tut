@@ -41,6 +41,7 @@ import static tech.getarrays.supportportal.constant.SecurityConstant.JWT_TOKEN_H
 
 @RestController
 @RequestMapping(path = {"/", "/user"})
+//@CrossOrigin("http://localhost:4200")
 public class UserResource extends ExceptionHandling {
     private UserService userService;
     private AuthenticationManager authenticationManager;
